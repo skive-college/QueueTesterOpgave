@@ -11,43 +11,42 @@ namespace Tester
     {
         
         //antal Consumers
-        private int consumers = 3;
+        private int consumers = 1;
         //antal beskeder
         private int antal = 10000;
-
+        //presist eller memmory
+        private bool presist = true;
         
 
         private DateTime start;
         private List<double> tid = new List<double>();
         static void Main(string[] args)
-        {
-            
-            Tester p = new Tester();            
-            p.testConsumer();
-
-
+        {            
+            Tester t = new Tester();
+            t.testConsumer();
         }
 
         public void testConsumer()
         {            
             for(int i = 0; i < consumers; i++)
             {
-                Consumer c = new Consumer("Consumer nr. "+ i + "/"+consumers, antal);
+                Consumer c = new Consumer("Consumer nr. "+ (i+1) + "/"+consumers, antal);
                 //pull messages
-                Task.Run(() => c.StartPull()).ContinueWith(Done);
+                Task.Run(() => c.StartPull()).ContinueWith(Done,c);
                 //push messages
-                //Task.Run(() => c.Start()).ContinueWith(Done);
-            }                    
+                //Task.Run(() => c.Start()).ContinueWith(Done,c);
+            }
 
             start = DateTime.Now;
             Publicher p = new Publicher();
             p.Create(antal, true);
         }
-        private void Done(Task arg1)
+        private void Done(Task arg1, object c)
         {
             DateTime tiden = DateTime.Now;
-            Console.WriteLine(" Tiden = " + (tiden - start).TotalMilliseconds + " ms");
-            Console.WriteLine(" Tiden = " + (tiden - start).TotalSeconds + " s");
+            Consumer cons = c as Consumer;
+            Console.WriteLine(cons.name + " Tiden = " + (tiden - start).TotalMilliseconds + " ms");
+            Console.WriteLine(cons.name + " Tiden = " + (tiden - start).TotalSeconds + " s");
         }
     }
 }

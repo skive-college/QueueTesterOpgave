@@ -40,19 +40,16 @@ namespace RabbitMQPublicher
         public void Create(int antal, bool persistent)
         {
             Message m = new Message();
-            
+            var properties = Channel.CreateBasicProperties();
+            properties.Persistent = persistent;
             for (int i = 0; i < antal; i++)
             {
-                
-                var properties = Channel.CreateBasicProperties();
-                properties.Persistent = persistent;
                 Channel.BasicPublish(
                                 exchange: string.Empty,
                                 routingKey: QName,
                                 basicProperties: properties,
                                 body: Encoding.UTF8.GetBytes(m.Navn));
             }
-            
         }        
     }
 }

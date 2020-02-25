@@ -3,12 +3,16 @@ using RabbitMQ.Client.Events;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace RabbitMQConsumer
 {
     public class Consumer
     {
-        private static int toRead = -1;
+        private static int toRead;
+        
+        //private static int toRead;       
+
         public string name { get; private set; }
         public Consumer(string _name, int _toRead)
         {
@@ -53,38 +57,39 @@ namespace RabbitMQConsumer
 
         public void StartPull()
         {
-            string QName = "RabbitTest";
+            string queueName = "RabbitTest";
             var factory = new ConnectionFactory() { HostName = "localhost" };
 
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
-                channel.QueueDeclare(queue: QName,
+                channel.QueueDeclare(queue: queueName,
                                      durable: true,
                                      exclusive: false,
                                      autoDelete: false,
                                      arguments: null);
                 Console.WriteLine(name);
-                int ready = (int)channel.MessageCount(QName);
-                while (ready != 0 || toRead != 0)
+                int ready = (int)channel.MessageCount(queueName);
+                Console.ForegroundColor = ConsoleColor.Green;
+                while (ready > 0 || toRead > 0)
                 {
-                    bool noAck = false;
-                    BasicGetResult result = channel.BasicGet(QName, noAck);
+                   
+                    bool Ack = true;
+                    BasicGetResult result = channel.BasicGet(queueName, Ack);
                     if (result == null)
                     {
                         // No message available at this time.
                     }
                     else
                     {
-                        IBasicProperties props = result.BasicProperties;
                         byte[] body = result.Body;
+
                         // acknowledge receipt of the message
                         Console.WriteLine(name + " læser");
-                        --toRead;
-                        channel.BasicAck(result.DeliveryTag, false);
+                        toRead--;
                         
                     }
-                    ready = (int)channel.MessageCount(QName);
+                    ready = (int)channel.MessageCount(queueName);
                 }
             }
         }
