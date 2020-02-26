@@ -85,7 +85,8 @@ namespace RabbitMQConsumer
                         byte[] body = result.Body;
 
                         // acknowledge receipt of the message
-                        Console.WriteLine(name + " læser");
+                        //Console.WriteLine(name + " læser");
+                        Thread.Sleep(2);
                         toRead--;
                         
                     }

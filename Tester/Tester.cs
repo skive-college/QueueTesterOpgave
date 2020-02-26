@@ -23,16 +23,16 @@ namespace Tester
         static void Main(string[] args)
         {            
             Tester t = new Tester();
-            t.testConsumer();
+            t.testConsumerRabbit();
         }
 
-        public void testConsumer()
+        public void testConsumerRabbit()
         {            
             for(int i = 0; i < consumers; i++)
             {
                 Consumer c = new Consumer("Consumer nr. "+ (i+1) + "/"+consumers, antal);
                 //pull messages
-                Task.Run(() => c.StartPull()).ContinueWith(Done,c);
+                Task.Run(() => c.StartPull()).ContinueWith(DoneRabbit,c);
                 //push messages
                 //Task.Run(() => c.Start()).ContinueWith(Done,c);
             }
@@ -41,7 +41,7 @@ namespace Tester
             Publicher p = new Publicher();
             p.Create(antal, presist);
         }
-        private void Done(Task arg1, object c)
+        private void DoneRabbit(Task arg1, object c)
         {
             DateTime tiden = DateTime.Now;
             Consumer cons = c as Consumer;
