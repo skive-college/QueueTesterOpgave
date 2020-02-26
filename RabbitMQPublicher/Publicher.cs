@@ -48,7 +48,7 @@ namespace RabbitMQPublicher
                                 exchange: string.Empty,
                                 routingKey: QName,
                                 basicProperties: properties,
-                                body: Encoding.UTF8.GetBytes(m.Navn));
+                                body: m.Navn);
             }
         }        
     }

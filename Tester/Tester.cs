@@ -39,7 +39,7 @@ namespace Tester
 
             start = DateTime.Now;
             Publicher p = new Publicher();
-            p.Create(antal, true);
+            p.Create(antal, presist);
         }
         private void Done(Task arg1, object c)
         {
