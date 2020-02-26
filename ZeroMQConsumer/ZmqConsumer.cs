@@ -27,7 +27,7 @@ namespace ZeroMQConsumer
                     if(b)
                     {
                         //Console.WriteLine(name + " Resived ");
-                        Thread.Sleep(5);
+                        Thread.Sleep(2);
                         toRead--;
                     }
                     else if(toRead != antal && !b)

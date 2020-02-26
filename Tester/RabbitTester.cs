@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Tester
 {
-    class Tester
+    class RabbitTester
     {
         
         //antal Consumers
-        private int consumers = 1;
+        private int consumers = 2;
         //antal beskeder
         private int antal = 10000;
         //presist eller memmory
@@ -21,8 +21,10 @@ namespace Tester
         private DateTime start;
         private List<double> tid = new List<double>();
         static void Main(string[] args)
-        {            
-            Tester t = new Tester();
+        {
+
+            Console.WriteLine("-----------Rabbit TESTER------------");
+            RabbitTester t = new RabbitTester();
             t.testConsumerRabbit();
         }
 
@@ -32,7 +34,7 @@ namespace Tester
             {
                 Consumer c = new Consumer("Consumer nr. "+ (i+1) + "/"+consumers, antal);
                 //pull messages
-                Task.Run(() => c.StartPull()).ContinueWith(DoneRabbit,c);
+                Task.Run(() => c.StartPull(antal)).ContinueWith(DoneRabbit,c);
                 //push messages
                 //Task.Run(() => c.Start()).ContinueWith(Done,c);
             }

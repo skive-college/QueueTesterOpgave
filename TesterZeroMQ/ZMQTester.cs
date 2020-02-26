@@ -6,7 +6,7 @@ using ZeroMQPublicher;
 
 namespace TesterZeroMQ
 {
-    class Tester
+    class ZMQTester
     {
         //antal Consumers
         private int consumers = 2;
@@ -19,7 +19,8 @@ namespace TesterZeroMQ
         private bool wait = true;
         static void Main(string[] args)
         {
-            Tester t = new Tester();
+            Console.WriteLine("-----------ZMQ TESTER------------");
+            ZMQTester t = new ZMQTester();
             t.testConsumer();
         }
 
