@@ -40,6 +40,7 @@ namespace RabbitMQPublicher
         public void Create(int antal, bool persistent)
         {
             Message m = new Message();
+            
             var properties = Channel.CreateBasicProperties();
             properties.Persistent = persistent;
             for (int i = 0; i < antal; i++)
@@ -50,6 +51,7 @@ namespace RabbitMQPublicher
                                 basicProperties: properties,
                                 body: m.Navn);
             }
+         
         }        
     }
 }

@@ -11,11 +11,11 @@ namespace Tester
     {
         
         //antal Consumers
-        private int consumers = 1;
+        private int consumers = 3;
         //antal beskeder
         private int antal = 10000;
         //presist eller memmory
-        private bool presist = true;
+        private bool presist = false;
         
 
         private DateTime start;

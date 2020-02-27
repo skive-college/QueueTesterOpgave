@@ -43,7 +43,7 @@ namespace RabbitMQConsumer
                         consumer.Received += (ch, ea) =>
                         {
                             var body = ea.Body;
-                            Console.WriteLine(name + " læser");
+                           // Console.WriteLine(name + " læser");
                             channel.BasicAck(ea.DeliveryTag, false);
                             toRead--;
                         };
@@ -85,7 +85,7 @@ namespace RabbitMQConsumer
                         byte[] body = result.Body;
 
                         // acknowledge receipt of the message
-                        Console.WriteLine(name + " læser");
+                       // Console.WriteLine(name + " læser");
                         toRead--;
                         
                     }

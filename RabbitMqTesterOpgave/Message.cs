@@ -10,6 +10,7 @@ namespace RabbitMqTesterOpgave
 
         public Message()
         {
+            //Navn = new Byte[10];
             Navn = new Byte[1280];
         }
     }
