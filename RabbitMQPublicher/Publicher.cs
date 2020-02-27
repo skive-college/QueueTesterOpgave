@@ -39,6 +39,7 @@ namespace RabbitMQPublicher
 
         public void Create(int antal, bool persistent)
         {
+            Console.WriteLine("Publisher started");
             Message m = new Message();
             
             var properties = Channel.CreateBasicProperties();
@@ -51,7 +52,7 @@ namespace RabbitMQPublicher
                                 basicProperties: properties,
                                 body: m.Navn);
             }
-         
+            Console.WriteLine(antal + " Beskeder sendt");
         }        
     }
 }

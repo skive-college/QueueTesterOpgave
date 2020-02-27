@@ -55,7 +55,7 @@ namespace RabbitMQConsumer
             }
         }
 
-        public void StartPull()
+        public void StartPull(int antal)
         {
             string queueName = "RabbitTest";
             var factory = new ConnectionFactory() { HostName = "localhost" };
@@ -68,7 +68,7 @@ namespace RabbitMQConsumer
                                      exclusive: false,
                                      autoDelete: false,
                                      arguments: null);
-                Console.WriteLine(name);
+                Console.WriteLine(name + " started");
                 int ready = (int)channel.MessageCount(queueName);
                 Console.ForegroundColor = ConsoleColor.Green;
                 while (ready > 0 || toRead > 0)
@@ -78,14 +78,16 @@ namespace RabbitMQConsumer
                     BasicGetResult result = channel.BasicGet(queueName, Ack);
                     if (result == null)
                     {
-                        // No message available at this time.
+                        if (toRead != antal)
+                            break;
                     }
                     else
                     {
                         byte[] body = result.Body;
 
                         // acknowledge receipt of the message
-                       // Console.WriteLine(name + " læser");
+                        //Console.WriteLine(name + " læser");
+                        Thread.Sleep(2);
                         toRead--;
                         
                     }
